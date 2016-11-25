@@ -31,7 +31,7 @@ var mainState = {
 
         // Create an empty group
         this.pipes = game.add.group(); 
-        this.timer = game.time.events.loop(1500, this.addRowOfPipes, this); 
+        this.timer = game.time.events.loop(2000, this.addRowOfPipes, this);
 
         this.score = 0;
         this.labelScore = game.add.text(20, 20, "0", 
@@ -43,6 +43,8 @@ var mainState = {
         var spaceKey = game.input.keyboard.addKey(
                         Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.jump, this);     
+        
+        game.input.onDown.add(this.jump,this);
     },
 
     update: function() {
@@ -50,7 +52,7 @@ var mainState = {
         // It contains the game's logic 
         // If the bird is out of the screen (too high or too low)
         // Call the 'restartGame' function
-        if (this.bird.y < 0 || this.bird.y > 490)
+        if (this.bird.y < 0 || this.bird.y > 900)
             this.restartGame();  
         if (this.bird.angle < 20)
             this.bird.angle += 1; 
@@ -80,14 +82,14 @@ var mainState = {
     addRowOfPipes: function() {
         // Randomly pick a number between 1 and 5
         // This will be the hole position
-        var hole = Math.floor(Math.random() * 5) + 1;
+        var hole = Math.floor(Math.random() *12 ) + 1;
         this.score += 1;
         this.labelScore.text = this.score;
         // Add the 6 pipes 
         // With one big hole at position 'hole' and 'hole + 1'
-        for (var i = 0; i < 8; i++)
-            if (i != hole && i != hole + 1) 
-                this.addOnePipe(400, i * 60 + 10);   
+        for (var i = 0; i < 16; i++)
+            if (i != hole && i != hole + 1)
+                this.addOnePipe(800, i * 60 + 10);
     },
     jump: function() {
         // Add a vertical velocity to the bird
@@ -128,7 +130,7 @@ var mainState = {
 };
 
 // Initialize Phaser, and create a 400px by 490px game
-var game = new Phaser.Game(400, 490);
+var game = new Phaser.Game(800, 900);
 
 // Add the 'mainState' and call it 'main'
 game.state.add('main', mainState); 
