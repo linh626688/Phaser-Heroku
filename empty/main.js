@@ -35,8 +35,9 @@ var mainState = {
 
         this.score = 0;
         this.labelScore = game.add.text(20, 20, "0", 
-            { font: "30px Arial", fill: "#ffffff" });  
-        this.bird.anchor.setTo(-0.2, 0.5);  
+            { font: "30px Arial", fill: "#ffffff" });
+        this.hpbdText = game.add.text(40,20,"",{ font: "50px Arial", fill: "#ffeb3b"});
+        this.bird.anchor.setTo(-0.2, 0.5);
         this.jumpSound = game.add.audio('jump'); 
 
         // Call the 'jump' function when the spacekey is hit
@@ -85,18 +86,25 @@ var mainState = {
         var hole = Math.floor(Math.random() *12 ) + 1;
         this.score += 1;
         this.labelScore.text = this.score;
+  //      this.hpbdText.text = "HAPPY BIRTHDAY ANH THINH";
+
         // Add the 6 pipes 
         // With one big hole at position 'hole' and 'hole + 1'
         for (var i = 0; i < 16; i++)
-            if (i != hole && i != hole + 1)
+            if (i != hole && i != hole + 1){
                 this.addOnePipe(800, i * 60 + 10);
+            }
+
     },
     jump: function() {
         // Add a vertical velocity to the bird
         this.bird.body.velocity.y = -350;
        
         var animation = game.add.tween(this.bird);
-
+        var arrayText= ["Happy","Happy Birthday","Happy Birthday anh", "Happy Birthday anh Thinh", "<3","<3","<3"];
+        var arrayColor = ["#ff0000","#8bc34a","#9c27b0","#ffeb3b"];
+        this.hpbdText.text = arrayText[this.score];
+        this.hpbdText.text.addColor(arrayColor[this.score],0);
         // Change the angle of the bird to -20° in 100 milliseconds
         animation.to({angle: -20}, 100);
         this.jumpSound.play(); 
